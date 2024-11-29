@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Prroducts</title>
+    {% include 'header.html' %}
+  </head>
+  <body>
+    <h3 class="text-center text-danger">Welcome To the Upload page</h3>
+
+    <section class="row p-3">
+      <div class="col md-6">
+        <div class="card shadow p-2">
+          <h4 class="text-success text-center">{{message}}</h4>
+
+          <form action="/upload" method="post" enctype="multipart/form-data">
+            <label> Food Name:</label><br />
+            <input
+              type="text"
+              name="foodname"
+              class="form-control"
+              placeholder="Enter the food name here"
+              required
+            />
+
+            <label>Food Description:</label><br />
+            <input
+              type="text"
+              name="description"
+              class="form-control"
+              placeholder="Enter the food Description here"
+              required
+            />
+
+            <label>Food Price:</label><br />
+            <input
+              type="number"
+              name="price"
+              class="form-control"
+              placeholder="Enter the food Cost here"
+              required
+            /><br />
+
+            <label> Foood image:</label><br />
+            <input
+              type="file"
+              name="image_name"
+              class="form-control"
+              required
+            /><br />
+
+            <input
+              type="submit"
+              value="Upload food"
+              class="btn btn-outline-success"
+            />
+          </form>
+        </div>
+      </div>
+      <div class="col md-6"></div>
+    </section>
+  </body>
+</html>
