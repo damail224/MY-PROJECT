@@ -1,16 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KEROMA FOODS</title>
-    {% include 'header.html' %}
-    {% include 'navbar.html' %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodiesHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: #FF6347;
+      color: white;
+    }
+
+    header .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+
+    header nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 50px;
+      background-color: #fff;
+    }
+
+    .hero-text {
+      max-width: 50%;
+    }
+
+    .hero-text h1 {
+      font-size: 3em;
+      color: #333;
+    }
+
+    .hero-text p {
+      font-size: 1.2em;
+      color: #666;
+      line-height: 1.6;
+      margin: 20px 0;
+    }
+
+    .hero-text .btn {
+      padding: 15px 30px;
+      background-color: #FF6347;
+    color: white;
+    font-size: 1em;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .hero-text .btn:hover {
+    background-color: #e5533e;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #FF6347;
+    color: white;
+    margin-top: 50px;
+  }
+</style>
 </head>
+
 <body>
-    <marquee behavior="scroll" direction="left" scrollment="60" style="color: red; font-size: 30px;">Welcome To Keroma Fast  Foods</marquee>
-    <h2 class="text-info"><center>KEROMA FOODS</center></h2>
-    <button type="button" class="btn btn-primary">View Menu</button> 
-    <button type="button" class="btn-success">Place Order</button>
-</body>
-</html>
+    <header>
+      <div class="logo">FoodiesHub</div>
+      <nav>
+        <a href="#">Menu</a>
+        <a href="#">Order</a>
+      </nav>
+    </header>
+  
+    <div class="hero-section">
+      <div class="hero-text">
+        <h1>Delicious Food Delivered to Your Doorstep</h1>
+        <p>Explore a variety of cuisines, order your favorite dishes, and enjoy fast and reliable delivery. Experience the best flavors from the comfort of your home.</p>
+        <button class="btn">Order Now</button>
+      </div>
+      <div class="hero-image">
+        <img src="../static/foods/burgers.webp" alt="Delicious Food">
+      </div>
+    </div>
+  
+    <footer>
+      &copy; 2024 FoodiesHub. All Rights Reserved.
+    </footer>
+  </body>
+  </html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders Cart | FoodiesHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: #FF6347;
+      color: white;
+    }
+
+    header .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+
+    header nav a:hover {
+      text-decoration: underline;
+    }
+
+    .cart-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-title {
+      text-align: center;
+      font-size: 2.5em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .cart-table th, 
+    .cart-table td {
+      text-align: center;
+      padding: 15px;
+      border: 1px solid #ddd;
+    }
+
+    .cart-table th {
+      background-color: #FF6347;
+      color: white;
+      font-weight: 600;
+    }
+
+    .cart-table img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .cart-quantity input {
+      width: 50px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .cart-quantity input:focus {
+      outline: 2px solid #FF6347;
+    }
+
+    .cart-total {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .checkout-button {
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      margin: 20px auto 0;
+      padding: 12px;
+      background-color: #FF6347;
+      color: white;
+      font-size: 1.2em;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+    }
+
+    .checkout-button:hover {
+      background-color: #e5533e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #FF6347;
+      color: white;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">FoodiesHub</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="cart.html">Cart</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="cart-container">
+    <h1 class="cart-title">Your Orders</h1>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Food Name</th>
+          <th>Price (Ksh)</th>
+          <th>Quantity</th>
+          <th>Total (Ksh)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Item 1 -->
+        <tr>
+          <td><img src="https://source.unsplash.com/70x70/?pizza" alt="Pizza"></td>
+          <td>Margherita Pizza</td>
+          <td>750</td>
+          <td class="cart-quantity">
+            <input type="number" value="1" min="1">
+          </td>
+          <td>750</td>
+          <td><button style="padding: 5px 10px; background: #FF6347; color: white; border: none; border-radius: 5px; cursor: pointer;">Remove</button></td>
+        </tr>
+
+        <!-- Item 2 -->
+        <tr>
+          <td><img src="https://source.unsplash.com/70x70/?burger" alt="Burger"></td>
+          <td>Cheeseburger</td>
+          <td>450</td>
+          <td class="cart-quantity">
+            <input type="number" value="2" min="1">
+          </td>
+          <td>900</td>
+          <td><button style="padding: 5px 10px; background: #FF6347; color: white; border: none; border-radius: 5px; cursor: pointer;">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="cart-total">Grand Total: Ksh 1,650</p>
+    <a href="#" class="checkout-button">Checkout</a>
+  </div>
+
+  <footer>
+    &copy; 2024 FoodiesHub. All Rights Reserved.
+  </footer>
+</body>
+</html>

@@ -1,26 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu | FoodiesHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background-color: #FF6347;
+      color: white;
+    }
+
+    header .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+
+    header nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .menu-title {
+      text-align: center;
+      font-size: 2.5em;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .menu-item {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.05);
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .menu-item-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .menu-item-content h3 {
+      font-size: 1.5em;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .menu-item-content p {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+    }
+
+    .menu-item-content .price {
+      font-size: 1.2em;
+      color: #FF6347;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .menu-item-content button {
+      padding: 10px 20px;
+      background-color: #FF6347;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-item-content button:hover {
+      background-color: #e5533e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #FF6347;
+      color: white;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="my-4">Menu</h1>
-        <div class="row">
-          {% for item in menu-items %}
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{ name }}</h5>
-                <p class="card-text">{{ description }}</p>
-                <p><strong>Price: ${{ price }}</strong></p>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
+  <header>
+    <div class="logo">FoodiesHub</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="#">Order</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="menu-container">
+    <h1 class="menu-title">Our Delicious Menu</h1>
+    <div class="menu-grid">
+      <!-- Menu Item 1 -->
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/300x200/?pizza" alt="Pizza">
+        <div class="menu-item-content">
+          <h3>Margherita Pizza</h3>
+          <p>Classic Italian pizza topped with fresh tomatoes, mozzarella, and basil.</p>
+          <p class="price">Ksh 750</p>
+          <button>Add to Cart</button>
         </div>
       </div>
+
+      <!-- Menu Item 2 -->
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/300x200/?burger" alt="Burger">
+        <div class="menu-item-content">
+          <h3>Cheeseburger</h3>
+          <p>Juicy beef patty with melted cheese, lettuce, and a toasted bun.</p>
+          <p class="price">Ksh 450</p>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Menu Item 3 -->
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/300x200/?sushi" alt="Sushi">
+        <div class="menu-item-content">
+          <h3>Sushi Platter</h3>
+          <p>A variety of fresh sushi rolls and sashimi with dipping sauces.</p>
+          <p class="price">Ksh 1,200</p>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Menu Item 4 -->
+      <div class="menu-item">
+        <img src="https://source.unsplash.com/300x200/?pasta" alt="Pasta">
+        <div class="menu-item-content">
+          <h3>Spaghetti Carbonara</h3>
+          <p>Rich and creamy pasta with crispy pancetta and parmesan cheese.</p>
+          <p class="price">Ksh 650</p>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2024 FoodiesHub. All Rights Reserved.
+  </footer>
 </body>
 </html>
