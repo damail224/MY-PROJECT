@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders Cart | FoodiesHub</title>
+  <title>Orders Cart | DineTrail</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -129,12 +129,13 @@
 </head>
 <body>
   <header>
-    <div class="logo">FoodiesHub</div>
+    <div class="logo">DineTrail</div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="menu.html">Menu</a>
-      <a href="cart.html">Cart</a>
-      <a href="#">Contact</a>
+      <a href="/">Home</a>
+      <a href="/menu">Menu</a>
+      <a href="/cart">Cart</a>
+    
+    
     </nav>
   </header>
 
@@ -145,45 +146,98 @@
         <tr>
           <th>Image</th>
           <th>Food Name</th>
-          <th>Price (Ksh)</th>
+          <th>Price ($)</th>
           <th>Quantity</th>
-          <th>Total (Ksh)</th>
+          <th>Total ($)</th>
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
+      <!-- <tbody> -->
         <!-- Item 1 -->
-        <tr>
-          <td><img src="https://source.unsplash.com/70x70/?pizza" alt="Pizza"></td>
-          <td>Margherita Pizza</td>
-          <td>750</td>
+        <!-- <tr>
+          <td><img src="../static/foods/Andazis.webp" alt="Andazi"></td>
+          <td>Andazis</td>
+          <td>$ 1.00</td>
           <td class="cart-quantity">
             <input type="number" value="1" min="1">
           </td>
-          <td>750</td>
+          <td>$ 1.00</td>
           <td><button style="padding: 5px 10px; background: #FF6347; color: white; border: none; border-radius: 5px; cursor: pointer;">Remove</button></td>
-        </tr>
+        </tr> -->
 
         <!-- Item 2 -->
-        <tr>
-          <td><img src="https://source.unsplash.com/70x70/?burger" alt="Burger"></td>
-          <td>Cheeseburger</td>
-          <td>450</td>
+        <!-- <tr>
+          <td><img src="../static/foods/burgers.webp" alt="Burger"></td>
+          <td>Burger</td>
+          <td>$ 9.00</td>
           <td class="cart-quantity">
             <input type="number" value="2" min="1">
           </td>
-          <td>900</td>
+          <td>$ 9.00</td>
           <td><button style="padding: 5px 10px; background: #FF6347; color: white; border: none; border-radius: 5px; cursor: pointer;">Remove</button></td>
         </tr>
-      </tbody>
+      </tbody> -->
     </table>
 
-    <p class="cart-total">Grand Total: Ksh 1,650</p>
+    <p class="cart-total">Grand Total: $ </p>
     <a href="#" class="checkout-button">Checkout</a>
   </div>
 
   <footer>
-    &copy; 2024 FoodiesHub. All Rights Reserved.
+    &copy; 2024 DineTrail. All Rights Reserved.
   </footer>
+  <script>
+    // Load Cart from localStorage and Update Display
+    function loadCart() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartList = document.getElementById('cart-list');
+        const totalPriceElement = document.getElementById('total-price');
+
+        // Clear the current cart display
+        cartList.innerHTML = '';
+
+        let total = 0;
+
+        // Loop through cart and display items
+        cart.forEach((item, index) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.name} - $${item.price} x ${item.quantity} = $${item.total}`;
+
+            // Create Remove Button for each item
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-button');
+            removeButton.onclick = () => removeFromCart(index);
+
+            listItem.appendChild(removeButton);
+            cartList.appendChild(listItem);
+
+            total += item.total;
+        });
+
+        // Update total price display
+        totalPriceElement.textContent = `Total: $${total}`;
+    }
+
+    // Remove Item from Cart
+    function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.splice(index, 1); // Remove item from cart by index
+        localStorage.setItem('cart', JSON.stringify(cart)); // Save the updated cart
+        loadCart(); // Update the display after removal
+    }
+
+    // Checkout Function (simple placeholder)
+    function checkout() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalPrice = cart.reduce((total, item) => total + item.total, 0);
+        alert(`Checkout successful! Total price: $${totalPrice}`);
+        localStorage.removeItem('cart'); // Clear the cart after checkout
+        loadCart(); // Update the display after checkout (cart should be empty)
+    }
+
+    // Load Cart on Page Load
+    loadCart();
+</script>
 </body>
 </html>

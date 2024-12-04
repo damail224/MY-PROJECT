@@ -11,18 +11,18 @@ def home():
 def menu():
     return render_template("menu.html")
 
-@app.route('/place_order')   
-def place_order():
-    return render_template("place_order.html") 
-
 @app.route('/cart')   
 def cart():
     return render_template("cart.html")
 
-@app.route("/uploadnew" , methods=["POST","GET"])
-def uploadnew():
+@app.route('/carttrial')   
+def carttrial():
+    return render_template("carttrial.html")
+
+@app.route("/upload" , methods=["POST","GET"])
+def upload():
     if request.method == "GET":
-     return render_template("uploadnew.html")
+     return render_template("upload.html")
     else:
         foodname = request.form ["foodname"]
         description = request.form ["description"]

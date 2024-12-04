@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Page with Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .menu-item {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+        .cart {
+            margin-top: 20px;
+        }
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .cart li {
+            margin: 5px 0;
+        }
+        .button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .remove-button {
+            background-color: red;
+        }
+        .checkout-button {
+            margin-top: 20px;
+            background-color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Menu</h1>
+
+    <!-- Menu Items -->
+    <div class="menu-item">
+        <h3>Pizza</h3>
+        <p>$10</p>
+        <button class="button" onclick="addToCart('Pizza', 10)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3>Burger</h3>
+        <p>$8</p>
+        <button class="button" onclick="addToCart('Burger', 8)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3>Pasta</h3>
+        <p>$12</p>
+        <button class="button" onclick="addToCart('Pasta', 12)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3>Salad</h3>
+        <p>$6</p>
+        <button class="button" onclick="addToCart('Salad', 6)">Add to Cart</button>
+    </div>
+
+    <!-- Cart Section -->
+    <div class="cart" id="cart-section">
+        <h2>Your Cart</h2>
+        <ul id="cart-list"></ul>
+        <p id="total-price">Total: $0</p>
+        <button class="button checkout-button" onclick="checkout()">Checkout</button>
+    </div>
+
+    <script>
+        let cart = []; // This will hold the cart items
+
+        // Add to Cart Function
+        function addToCart(itemName, itemPrice) {
+            const existingItem = cart.find(item => item.name === itemName);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+                existingItem.total = existingItem.quantity * itemPrice;
+            } else {
+                cart.push({
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: 1,
+                    total: itemPrice
+                });
+            }
+            updateCart(); // Update the display of the cart after each addition
+        }
+
+        // Update Cart Display
+        function updateCart() {
+            const cartList = document.getElementById('cart-list');
+            const totalPriceElement = document.getElementById('total-price');
+
+            // Clear the current cart display
+            cartList.innerHTML = '';
+
+            let total = 0;
+
+            // Loop through cart and display items
+            cart.forEach((item, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - $${item.price} x ${item.quantity} = $${item.total}`;
+
+                // Create a Remove Button for each item
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.classList.add('remove-button');
+                removeButton.onclick = () => removeFromCart(index);
+
+                listItem.appendChild(removeButton);
+                cartList.appendChild(listItem);
+
+                total += item.total;
+            });
+
+            // Update total price display
+            totalPriceElement.textContent = `Total: $${total}`;
+        }
+
+        // Remove Item from Cart
+        function removeFromCart(index) {
+            cart.splice(index, 1); // Remove item from the cart by index
+            updateCart(); // Update the cart display after removal
+        }
+
+        // Checkout Function (simple placeholder)
+        function checkout() {
+            const totalPrice = cart.reduce((total, item) => total + item.total, 0);
+            alert(`Checkout successful! Total price: $${totalPrice}`);
+            cart = []; // Clear the cart after checkout
+            updateCart(); // Update the display after checkout
+        }
+    </script>
+
+</body>
+</html>
