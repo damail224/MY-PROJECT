@@ -1,243 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders Cart | DineTrail</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders Cart | DineTrail</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #f9f9f9;
+      }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 50px;
-      background-color: #FF6347;
-      color: white;
-    }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background-color: #ff6347;
+        color: white;
+      }
 
-    header .logo {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
+      header .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
 
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: 600;
-    }
+      header nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: 600;
+      }
 
-    header nav a:hover {
-      text-decoration: underline;
-    }
+      header nav a:hover {
+        text-decoration: underline;
+      }
 
-    .cart-container {
-      max-width: 1200px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
+      .cart-container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
 
-    .cart-title {
-      text-align: center;
-      font-size: 2.5em;
-      color: #333;
-      margin-bottom: 20px;
-    }
+      .cart-title {
+        text-align: center;
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 20px;
+      }
 
-    .cart-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+      .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-    .cart-table th, 
-    .cart-table td {
-      text-align: center;
-      padding: 15px;
-      border: 1px solid #ddd;
-    }
+      .cart-table th,
+      .cart-table td {
+        text-align: center;
+        padding: 15px;
+        border: 1px solid #ddd;
+      }
 
-    .cart-table th {
-      background-color: #FF6347;
-      color: white;
-      font-weight: 600;
-    }
+      .cart-table th {
+        background-color: #ff6347;
+        color: white;
+        font-weight: 600;
+      }
 
-    .cart-table img {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
+      .cart-table img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
 
-    .cart-quantity input {
-      width: 50px;
-      padding: 5px;
-      text-align: center;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
+      .cart-quantity input {
+        width: 50px;
+        padding: 5px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
 
-    .cart-quantity input:focus {
-      outline: 2px solid #FF6347;
-    }
+      .cart-quantity input:focus {
+        outline: 2px solid #ff6347;
+      }
 
-    .cart-total {
-      text-align: right;
-      margin-top: 20px;
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #333;
-    }
+      .cart-total {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #333;
+      }
 
-    .checkout-button {
-      display: block;
-      width: 100%;
-      max-width: 200px;
-      margin: 20px auto 0;
-      padding: 12px;
-      background-color: #FF6347;
-      color: white;
-      font-size: 1.2em;
-      text-align: center;
-      text-decoration: none;
-      font-weight: 600;
-      border-radius: 25px;
-      transition: background-color 0.3s ease;
-    }
+      .checkout-button {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 20px auto 0;
+        padding: 12px;
+        background-color: #ff6347;
+        color: white;
+        font-size: 1.2em;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: 25px;
+        transition: background-color 0.3s ease;
+      }
 
-    .checkout-button:hover {
-      background-color: #e5533e;
-    }
+      .checkout-button:hover {
+        background-color: #e5533e;
+      }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #FF6347;
-      color: white;
-      margin-top: 50px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">DineTrail</div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/menu">Menu</a>
-      <a href="/cart">Cart</a>
-    
-    
-    </nav>
-  </header>
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #ff6347;
+        color: white;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">DineTrail</div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/menu">Menu</a>
+        <a href="/cart">Cart</a>
+      </nav>
+    </header>
 
-  <div class="cart-container">
-    <h1 class="cart-title">Your Orders</h1>
-    <table class="cart-table">
-      <thead>
-        <tr>
-          <th>Image</th>
-          <th>Food Name</th>
-          <th>Price ($)</th>
-          <th>Quantity</th>
-          <th>Total ($)</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <!-- <tbody> -->
-        <!-- Item 1 -->
-        <!-- <tr>
-          <td><img src="../static/foods/Andazis.webp" alt="Andazi"></td>
-          <td>Andazis</td>
-          <td>$ 1.00</td>
-          <td class="cart-quantity">
-            <input type="number" value="1" min="1">
-          </td>
-          <td>$ 1.00</td>
-          <td><button style="padding: 5px 10px; background: #FF6347; color: white; border: none; border-radius: 5px; cursor: pointer;">Remove</button></td>
-        </tr> -->
+    <div class="cart-container">
+      <ul id="cart-list"></ul>
 
-        <!-- Item 2 -->
-        <!-- <tr>
-          <td><img src="../static/foods/burgers.webp" alt="Burger"></td>
-          <td>Burger</td>
-          <td>$ 9.00</td>
-          <td class="cart-quantity">
-            <input type="number" value="2" min="1">
-          </td>
-          <td>$ 9.00</td>
-          <td><button style="padding: 5px 10px; background: #FF6347; color: white; border: none; border-radius: 5px; cursor: pointer;">Remove</button></td>
-        </tr>
-      </tbody> -->
-    </table>
+      <!-- Total Price -->
+      <p id="total-price" class="total-price">Total: $0</p>
 
-    <p class="cart-total">Grand Total: $ </p>
-    <a href="#" class="checkout-button">Checkout</a>
-  </div>
+      <!-- Checkout Button -->
+      <button class="checkout-button" onclick="checkout()">Checkout</button>
 
-  <footer>
-    &copy; 2024 DineTrail. All Rights Reserved.
-  </footer>
-  <script>
-    // Load Cart from localStorage and Update Display
-    function loadCart() {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartList = document.getElementById('cart-list');
-        const totalPriceElement = document.getElementById('total-price');
+      <p class="cart-total">Grand Total: $</p>
+      <a href="#" class="checkout-button">Checkout</a>
+    </div>
 
+    <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
+    <script>
+      // Load Cart from localStorage and Update Display
+      function loadCart() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartList = document.getElementById("cart-list");
+        const totalPriceElement = document.getElementById("total-price");
+
+        console.log(cart);
         // Clear the current cart display
-        cartList.innerHTML = '';
+        cartList.innerHTML = "";
 
         let total = 0;
 
         // Loop through cart and display items
         cart.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${item.name} - $${item.price} x ${item.quantity} = $${item.total}`;
+          const listItem = document.createElement("li");
+          listItem.textContent = `${item.name} - $${item.price} x ${item.quantity} = $${item.total}`;
+          console.log(listItem.data);
 
-            // Create Remove Button for each item
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.classList.add('remove-button');
-            removeButton.onclick = () => removeFromCart(index);
+          // Create Remove Button for each item
+          const removeButton = document.createElement("button");
+          removeButton.textContent = "Remove";
+          removeButton.classList.add("remove-button");
+          removeButton.onclick = () => removeFromCart(index);
 
-            listItem.appendChild(removeButton);
-            cartList.appendChild(listItem);
+          listItem.appendChild(removeButton);
+          cartList.appendChild(listItem);
 
-            total += item.total;
+          total += item.total;
         });
 
         // Update total price display
         totalPriceElement.textContent = `Total: $${total}`;
-    }
+      }
 
-    // Remove Item from Cart
-    function removeFromCart(index) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      // Remove Item from Cart
+      function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
         cart.splice(index, 1); // Remove item from cart by index
-        localStorage.setItem('cart', JSON.stringify(cart)); // Save the updated cart
+        localStorage.setItem("cart", JSON.stringify(cart)); // Save the updated cart
         loadCart(); // Update the display after removal
-    }
+      }
 
-    // Checkout Function (simple placeholder)
-    function checkout() {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      // Checkout Function (simple placeholder)
+      function checkout() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
         const totalPrice = cart.reduce((total, item) => total + item.total, 0);
         alert(`Checkout successful! Total price: $${totalPrice}`);
-        localStorage.removeItem('cart'); // Clear the cart after checkout
+        localStorage.removeItem("cart"); // Clear the cart after checkout
         loadCart(); // Update the display after checkout (cart should be empty)
-    }
+      }
 
-    // Load Cart on Page Load
-    loadCart();
-</script>
-</body>
+      // Load Cart on Page Load
+      loadCart();
+    </script>
+  </body>
 </html>
