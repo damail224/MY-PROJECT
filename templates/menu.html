@@ -193,6 +193,24 @@
         console.log(cart);
         alert(`${foodName} has been added to your cart!`);
       }
+
+      // Send cart to Flask backend
+      function sendCartToBackend() {
+        fetch("/submit_cart", {
+          method: "POST", // Send data as POST request
+          headers: {
+            "Content-Type": "application/json", // Inform Flask we're sending JSON data
+          },
+          body: JSON.stringify(cart), // Convert cart object to JSON string
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Cart submitted successfully:", data);
+          })
+          .catch((error) => {
+            console.error("Error submitting cart:", error);
+          });
+      }
     </script>
   </body>
 </html>
