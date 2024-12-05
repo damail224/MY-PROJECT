@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 06:34 PM
+-- Generation Time: Dec 05, 2024 at 02:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -40,8 +40,7 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `foodname`, `description`, `price`, `image_name`) VALUES
-(1, '1', '2', 3.00, '4'),
-(2, 'Chicken chips', ' Chicken and Chips Crispy, golden fried chicken served alongside thick-cut, perfectly seasoned fries for a delicious and satisfying meal.', 8.00, 'fried chiken and fries.webp'),
+(2, 'Chicken chips', ' Chicken and Chips Crispy, golden fried chicken served alongside thick-cut, perfectly seasoned fries for a delicious and satisfying meal.', 8.00, 'fries2.webp'),
 (3, 'Burger and fries', 'A juicy beef patty served with fresh lettuce, tomato, cheese, and a delicious sauce in a soft bun. Crispy golden fries, perfectly salted, and served with a choice of dipping sauce..', 13.00, 'burgers and fries.webp'),
 (4, 'Burgers', 'A juicy beef patty served with fresh lettuce, tomato, cheese, and a delicious sauce in a soft bun. ', 9.00, 'burgers.webp'),
 (5, 'Chips Plain', 'Crispy golden fries, perfectly salted, and served with a choice of dipping sauce..', 4.00, 'istockphoto-1742724562-612x612.webp'),

@@ -140,20 +140,14 @@
       <div class="menu-grid">
         {% for item in menu_items %}
         <div class="menu-item">
-          <img
-            src="../static/foods/{{item[4]}}"
-            alt=""
-            width="50"
-            height="50"
-          />
+          <img src="../static/foods/{{item[4]}}" alt="{{item[1]}}" />
           <div class="menu-item-content">
+            <h3>{{item[1]}}</h3>
             <p>{{item[2]}}</p>
-
-            <div class="detail-box">
-              {{item[1]}} <br />
-              <b>$ {{item[3]}}</b>
-            </div>
-            <button onclick="addToCart()" class="buy-btn">Add to Cart</button>
+            <div class="price">$ {{item[3]}}</div>
+            <button onclick="addToCart(this)" class="buy-btn">
+              Add to Cart
+            </button>
           </div>
         </div>
         {% endfor %}
@@ -161,26 +155,32 @@
     </div>
 
     <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
+
     <script>
       let cart = []; // Array to hold cart items
 
       // Function to add an item to the cart
       function addToCart(button) {
+        // Get the menu item element
         const menuItem = button.closest(".menu-item");
+
+        // Extract details from the item
         const imageName = menuItem.querySelector("img").getAttribute("src");
-        const foodName = menuItem.querySelector("h3").textContent;
+        const foodName = menuItem.querySelector("h3").textContent.trim();
         const price = parseFloat(
-          menuItem.querySelector(".price").textContent.replace(/[^\d.]/g, "")
+          menuItem.querySelector(".price").textContent.replace("$", "").trim()
         );
 
         // Check if the item already exists in the cart
-        const existingItem = cart.find((item) => item.foodName === foodName);
+        const existingItemIndex = cart.findIndex(
+          (item) => item.foodName === foodName
+        );
 
-        if (existingItem) {
-          // Update quantity if item already exists
-          existingItem.quantity += 1;
+        if (existingItemIndex > -1) {
+          // Update the quantity if item exists
+          cart[existingItemIndex].quantity += 1;
         } else {
-          // Add a new item
+          // Add a new item to the cart
           cart.push({
             imageName: imageName,
             foodName: foodName,
@@ -189,7 +189,9 @@
           });
         }
 
-        console.log(cart); // Debugging: Display cart in the console
+        // Debugging: Display the cart in the console
+        console.log(cart);
+        alert(`${foodName} has been added to your cart!`);
       }
     </script>
   </body>
