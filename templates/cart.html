@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orders Cart | DineTrail</title>
+    <title>Cart Checkout | DineTrail</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
@@ -41,7 +41,7 @@
       }
 
       .cart-container {
-        max-width: 1200px;
+        max-width: 800px;
         margin: 50px auto;
         padding: 20px;
         background-color: white;
@@ -51,9 +51,9 @@
 
       .cart-title {
         text-align: center;
-        font-size: 2.5em;
+        font-size: 2em;
         color: #333;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
       .cart-table {
@@ -63,61 +63,42 @@
 
       .cart-table th,
       .cart-table td {
-        text-align: center;
         padding: 15px;
-        border: 1px solid #ddd;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
       }
 
       .cart-table th {
         background-color: #ff6347;
         color: white;
-        font-weight: 600;
-      }
-
-      .cart-table img {
-        width: 70px;
-        height: 70px;
-        object-fit: cover;
-        border-radius: 5px;
-      }
-
-      .cart-quantity input {
-        width: 50px;
-        padding: 5px;
-        text-align: center;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-
-      .cart-quantity input:focus {
-        outline: 2px solid #ff6347;
+        font-weight: bold;
       }
 
       .cart-total {
-        text-align: right;
         margin-top: 20px;
-        font-size: 1.5em;
-        font-weight: bold;
+        text-align: right;
+        font-size: 1.2em;
         color: #333;
+        font-weight: bold;
       }
 
-      .checkout-button {
+      .checkout-btn {
         display: block;
         width: 100%;
-        max-width: 200px;
-        margin: 20px auto 0;
-        padding: 12px;
+        padding: 15px;
         background-color: #ff6347;
         color: white;
-        font-size: 1.2em;
         text-align: center;
-        text-decoration: none;
-        font-weight: 600;
+        border: none;
         border-radius: 25px;
-        transition: background-color 0.3s ease;
+        font-size: 1.2em;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+        text-decoration: none;
       }
 
-      .checkout-button:hover {
+      .checkout-btn:hover {
         background-color: #e5533e;
       }
 
@@ -141,73 +122,90 @@
     </header>
 
     <div class="cart-container">
-      <ul id="cart-list"></ul>
-
-      <!-- Total Price -->
-      <p id="total-price" class="total-price">Total: $0</p>
-
-      <!-- Checkout Button -->
-      <button class="checkout-button" onclick="checkout()">Checkout</button>
-
-      <p class="cart-total">Grand Total: $</p>
-      <a href="#" class="checkout-button">Checkout</a>
+      <h1 class="cart-title">Your Cart</h1>
+      <table class="cart-table" id="cartTable">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Food Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Items will be dynamically added here -->
+        </tbody>
+      </table>
+      <div class="cart-total" id="cartTotal">Total: $0.00</div>
+      <a href="/checkout" class="checkout-btn" id="checkoutBtn">Checkout</a>
     </div>
 
-    <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
+    <footer>
+      <p>&copy; 2024 DineTrail. All rights reserved.</p>
+    </footer>
+
     <script>
-      // Load Cart from localStorage and Update Display
-      function loadCart() {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const cartList = document.getElementById("cart-list");
-        const totalPriceElement = document.getElementById("total-price");
+      // Example cart data (replace this with your real cart data)
+      const cart = [
+        {
+          image: "../static/foods/burgers.webp",
+          foodName: "Burger",
+          price: 9.0,
+          quantity: 2,
+        },
+        {
+          image: "../static/foods/fried chicken.webp",
+          foodName: "Fried Chicken",
+          price: 11.0,
+          quantity: 1,
+        },
+        {
+          image: "../static/foods/orange juice.webp",
+          foodName: "Orange Juice",
+          price: 4.0,
+          quantity: 3,
+        },
+      ];
 
-        console.log(cart);
-        // Clear the current cart display
-        cartList.innerHTML = "";
+      // Function to render cart items
+      function renderCart() {
+        const cartTable = document
+          .getElementById("cartTable")
+          .querySelector("tbody");
+        const cartTotal = document.getElementById("cartTotal");
+        cartTable.innerHTML = ""; // Clear table
 
-        let total = 0;
+        let totalAmount = 0;
 
-        // Loop through cart and display items
-        cart.forEach((item, index) => {
-          const listItem = document.createElement("li");
-          listItem.textContent = `${item.name} - $${item.price} x ${item.quantity} = $${item.total}`;
-          console.log(listItem.data);
+        cart.forEach((item) => {
+          const itemTotal = item.price * item.quantity;
+          totalAmount += itemTotal;
 
-          // Create Remove Button for each item
-          const removeButton = document.createElement("button");
-          removeButton.textContent = "Remove";
-          removeButton.classList.add("remove-button");
-          removeButton.onclick = () => removeFromCart(index);
+          // Create a new row
+          const row = document.createElement("tr");
 
-          listItem.appendChild(removeButton);
-          cartList.appendChild(listItem);
+          // Add table cells
+          row.innerHTML = `
+            <td><img src="${item.image}" alt="${
+            item.foodName
+          }" width="50" /></td>
+            <td>${item.foodName}</td>
+            <td>$${item.price.toFixed(2)}</td>
+            <td>${item.quantity}</td>
+            <td>$${itemTotal.toFixed(2)}</td>
+          `;
 
-          total += item.total;
+          // Append row to table
+          cartTable.appendChild(row);
         });
 
-        // Update total price display
-        totalPriceElement.textContent = `Total: $${total}`;
+        // Update total amount
+        cartTotal.textContent = `Total: $${totalAmount.toFixed(2)}`;
       }
 
-      // Remove Item from Cart
-      function removeFromCart(index) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.splice(index, 1); // Remove item from cart by index
-        localStorage.setItem("cart", JSON.stringify(cart)); // Save the updated cart
-        loadCart(); // Update the display after removal
-      }
-
-      // Checkout Function (simple placeholder)
-      function checkout() {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const totalPrice = cart.reduce((total, item) => total + item.total, 0);
-        alert(`Checkout successful! Total price: $${totalPrice}`);
-        localStorage.removeItem("cart"); // Clear the cart after checkout
-        loadCart(); // Update the display after checkout (cart should be empty)
-      }
-
-      // Load Cart on Page Load
-      loadCart();
+      // Initialize cart
+      renderCart();
     </script>
   </body>
 </html>

@@ -9,7 +9,15 @@ def home():
 
 @app.route('/menu')   
 def menu():
-    return render_template("menu.html")
+    connection = pymysql.connect(host="localhost", user='root', password='', database='keroma')
+
+    # fetch electronics 
+    sql1 = 'select * from menu_items'
+    cursor = connection.cursor()
+    cursor.execute(sql1)
+    menu_items = cursor.fetchall()
+    
+    return render_template("menu.html", menu_items = menu_items)
 
 @app.route('/cart')   
 def cart():
@@ -38,7 +46,7 @@ def upload():
         cursor.execute(sql, (foodname, description, price, image_name.filename))
         
         connection.commit()
-        return render_template("uploadnew.html", message =" Uploaded Succesfully")
+        return render_template("upload.html", message =" Uploaded Succesfully")
     
 
 app.run(debug=True)
