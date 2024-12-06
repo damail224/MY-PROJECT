@@ -296,6 +296,72 @@
     <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
 
     <script>
+      function updateCart(foodname, action) {
+        fetch("/cart/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            foodname: foodname,
+            action: action,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (
+              data.message === "Cart updated" ||
+              data.message === "Item removed"
+            ) {
+              console.log(`${foodname} updated in the cart.`);
+              // Refresh the page to show updated cart
+              location.reload(); // This will reload the page to reflect the cart update
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating cart:", error);
+          });
+      }
+
+      function updateCartDisplay(cartItems) {
+        const cartItemsContainer = document.getElementById("cart-items");
+        cartItemsContainer.innerHTML = ""; // Clear the existing cart items
+
+        // Loop through the updated cart items and render them
+        cartItems.forEach((item) => {
+          const cartItemElement = document.createElement("div");
+          const itemQuantity = parseInt(item.quantity) || 0; // Ensure quantity is a number
+          const itemPrice = parseFloat(item.price) || 0; // Ensure price is a number
+          const totalPrice = itemQuantity * itemPrice;
+
+          cartItemElement.innerHTML = `
+        <div class="cart-item">
+            <img src="/images/${item.foodname}.jpg" alt="${
+            item.foodname
+          }" class="food-image">
+            <span>${item.foodname}</span>
+            <span>Quantity: ${itemQuantity}</span>
+            <span>Total: $${totalPrice.toFixed(2)}</span>
+            <button onclick="updateCart('${
+              item.foodname
+            }', 'remove')">Remove</button>
+        </div>
+    `;
+          cartItemsContainer.appendChild(cartItemElement);
+        });
+
+        // Optionally, update the grand total if available
+        const grandTotal = cartItems.reduce((total, item) => {
+          const itemQuantity = parseInt(item.quantity) || 0;
+          const itemPrice = parseFloat(item.price) || 0;
+          return total + itemQuantity * itemPrice;
+        }, 0);
+
+        document.getElementById(
+          "grand-total"
+        ).innerText = `Grand Total: $${grandTotal.toFixed(2)}`;
+      }
+
       // Modal logic remains the same
       const modal = document.getElementById("checkoutModal");
       const checkoutBtn = document.getElementById("checkoutBtn");
