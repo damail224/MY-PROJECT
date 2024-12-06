@@ -187,6 +187,46 @@
         font-style: italic;
       }
 
+      /* Styles for 'Add' button */
+      .add {
+        background-color: #28a745; /* Green for Add */
+        border-color: #28a745;
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 20px; /* Adequate padding */
+        font-size: 16px; /* Suitable font size */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: all 0.3s ease; /* Smooth transition for hover and active states */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      }
+
+      /* Hover and active effects for Add button */
+      .add:hover {
+        background-color: #218838;
+        border-color: #218838;
+        transform: translateY(-2px); /* Lift effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+      }
+
+      /* Styles for 'Remove' button */
+      .remove {
+        background-color: #ff6347; /* Red for Remove */
+        border-color: #ff6347;
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 20px; /* Adequate padding */
+        font-size: 16px; /* Suitable font size */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: all 0.3s ease; /* Smooth transition for hover and active states */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      }
+
+      /* Hover and active effects for Remove button */
+      .remove:hover {
+        background-color: #ff6347;
+        border-color: #ff6347;
+        transform: translateY(-2px); /* Lift effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+      }
+
       /* Modal animations */
       @keyframes fadeIn {
         from {
@@ -248,10 +288,16 @@
             <td>${{ item.price }}</td>
             <td>${{ item.total_price }}</td>
             <td>
-              <button onclick="updateCart('{{ item.foodname }}', 'add')">
+              <button
+                class="add"
+                onclick="updateCart('{{ item.foodname }}', 'add')"
+              >
                 Add
               </button>
-              <button onclick="updateCart('{{ item.foodname }}', 'remove')">
+              <button
+                class="remove"
+                onclick="updateCart('{{ item.foodname }}', 'remove')"
+              >
                 Remove
               </button>
             </td>
