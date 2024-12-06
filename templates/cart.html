@@ -1,211 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart Checkout | DineTrail</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        margin: 0;
-        font-family: "Poppins", sans-serif;
-        background-color: #f9f9f9;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart | DineTrail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
 
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 50px;
-        background-color: #ff6347;
-        color: white;
-      }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #ff6347; /* Tomato color */
+  color: white;
+}
 
-      header .logo {
-        font-size: 1.5em;
-        font-weight: bold;
-      }
+header .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
 
-      header nav a {
-        color: white;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: 600;
-      }
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 600;
+}
 
-      header nav a:hover {
-        text-decoration: underline;
-      }
+header nav a:hover {
+  text-decoration: underline;
+}
 
-      .cart-container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
+.cart-container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+}
 
-      .cart-title {
-        text-align: center;
-        font-size: 2em;
-        color: #333;
-        margin-bottom: 30px;
-      }
+.cart-title {
+  text-align: center;
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 30px;
+}
 
-      .cart-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
 
-      .cart-table th,
-      .cart-table td {
-        padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
+.cart-table th, .cart-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
 
-      .cart-table th {
-        background-color: #ff6347;
-        color: white;
-        font-weight: bold;
-      }
+.cart-table th {
+  background-color: #ff6347;
+  color: white;
+}
 
-      .cart-total {
-        margin-top: 20px;
-        text-align: right;
-        font-size: 1.2em;
-        color: #333;
-        font-weight: bold;
-      }
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
 
-      .checkout-btn {
-        display: block;
-        width: 100%;
-        padding: 15px;
-        background-color: #ff6347;
-        color: white;
-        text-align: center;
-        border: none;
-        border-radius: 25px;
-        font-size: 1.2em;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 20px;
-        text-decoration: none;
-      }
+.cart-item .item-name {
+  font-size: 1.1em;
+  color: #333;
+}
 
-      .checkout-btn:hover {
-        background-color: #e5533e;
-      }
+.cart-item .item-price, .cart-item .item-quantity {
+  color: #666;
+}
 
-      footer {
-        text-align: center;
-        padding: 20px;
-        background-color: #ff6347;
-        color: white;
-        margin-top: 50px;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="logo">DineTrail</div>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/menu">Menu</a>
-        <a href="/cart">Cart</a>
-      </nav>
-    </header>
+.cart-item .item-total {
+  font-weight: bold;
+  color: #ff6347;
+}
 
-    <div class="cart-container">
-      <h1 class="cart-title">Your Cart</h1>
-      <table class="cart-table" id="cartTable">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Food Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Items will be dynamically added here -->
-        </tbody>
-      </table>
-      <div class="cart-total" id="cartTotal">Total: $0.00</div>
-      <a href="/checkout" class="checkout-btn" id="checkoutBtn">Checkout</a>
+.cart-item button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-item button:hover {
+  background-color: #e5533e; /* Darker shade of tomato */
+}
+
+.cart-summary {
+  text-align: right;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.cart-summary .total {
+  font-weight: bold;
+  color: #ff6347;
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.cart-footer .update-cart {
+  padding: 10px 20px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-footer .update-cart:hover {
+  background-color: #e5533e;
+}
+
+.cart-footer .checkout-button {
+  padding: 10px 20px;
+  background-color: #28a745; /* Green for checkout */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-footer .checkout-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">DineTrail</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/menu">Menu</a>
+      <a href="/cart">Cart</a>
+    </nav>
+  </header>
+
+  <div class="cart-container">
+    <h1 class="cart-title">Your Shopping Cart</h1>
+    <div id="cart-container">
+      {% if cart_items %}
+        {% for item in cart_items %}
+        <div class="cart-item">
+          <h3>{{ item.foodname }}</h3>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p>Unit Price: ${{ item.price }}</p>
+          <p>Total Price: ${{ item.total_price }}</p>
+          <button onclick="updateCart('{{ item.foodname }}', 'add')">Add</button>
+          <button onclick="updateCart('{{ item.foodname }}', 'remove')">Remove</button>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p>Your cart is empty.</p>
+      {% endif %}
     </div>
+    <div class="cart-total">
+      <h2>Grand Total: $<span id="grand-total">{{ grand_total }}</span></h2>
+    </div>
+  </div>
 
-    <footer>
-      <p>&copy; 2024 DineTrail. All rights reserved.</p>
-    </footer>
+  <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
 
-    <script>
-      // Example cart data (replace this with your real cart data)
-      const cart = [
-        {
-          image: "../static/foods/burgers.webp",
-          foodName: "Burger",
-          price: 9.0,
-          quantity: 2,
-        },
-        {
-          image: "../static/foods/fried chicken.webp",
-          foodName: "Fried Chicken",
-          price: 11.0,
-          quantity: 1,
-        },
-        {
-          image: "../static/foods/orange juice.webp",
-          foodName: "Orange Juice",
-          price: 4.0,
-          quantity: 3,
-        },
-      ];
+  <script>
+    function updateCart(foodname, action) {
+      fetch('/cart/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ foodname, action })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Dynamically render cart items
+        const cartContainer = document.getElementById('cart-container');
+        const grandTotal = document.getElementById('grand-total');
+        
+        if (data.cart.length === 0) {
+          cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+          grandTotal.textContent = '0.00';
+        } else {
+          cartContainer.innerHTML = '';
+          let total = 0;
 
-      // Function to render cart items
-      function renderCart() {
-        const cartTable = document
-          .getElementById("cartTable")
-          .querySelector("tbody");
-        const cartTotal = document.getElementById("cartTotal");
-        cartTable.innerHTML = ""; // Clear table
+          data.cart.forEach(item => {
+            const totalPrice = item.quantity * item.price;
+            total += totalPrice;
 
-        let totalAmount = 0;
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+              <h3>${item.foodname}</h3>
+              <p>Quantity: ${item.quantity}</p>
+              <p>Unit Price: $${item.price}</p>
+              <p>Total Price: $${totalPrice.toFixed(2)}</p>
+              <button onclick="updateCart('${item.foodname}', 'add')">Add</button>
+              <button onclick="updateCart('${item.foodname}', 'remove')">Remove</button>
+            `;
+            cartContainer.appendChild(cartItem);
+          });
 
-        cart.forEach((item) => {
-          const itemTotal = item.price * item.quantity;
-          totalAmount += itemTotal;
-
-          // Create a new row
-          const row = document.createElement("tr");
-
-          // Add table cells
-          row.innerHTML = `
-            <td><img src="${item.image}" alt="${
-            item.foodName
-          }" width="50" /></td>
-            <td>${item.foodName}</td>
-            <td>$${item.price.toFixed(2)}</td>
-            <td>${item.quantity}</td>
-            <td>$${itemTotal.toFixed(2)}</td>
-          `;
-
-          // Append row to table
-          cartTable.appendChild(row);
-        });
-
-        // Update total amount
-        cartTotal.textContent = `Total: $${totalAmount.toFixed(2)}`;
-      }
-
-      // Initialize cart
-      renderCart();
-    </script>
-  </body>
+          // Update the grand total
+          grandTotal.textContent = total.toFixed(2);
+        }
+      })
+      .catch(error => console.error('Error updating cart:', error));
+    }
+  </script>
+</body>
 </html>

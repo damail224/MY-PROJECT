@@ -20,7 +20,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 20px 50px;
-        background-color: #ff6347;
+        background-color: #ff6347; /* Tomato color */
         color: white;
       }
 
@@ -55,7 +55,10 @@
 
       .menu-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        ); /* Flexibly adjusts columns based on screen size */
         gap: 20px;
       }
 
@@ -68,7 +71,7 @@
       }
 
       .menu-item:hover {
-        transform: scale(1.05);
+        transform: scale(1.05); /* Slight zoom effect on hover */
       }
 
       .menu-item img {
@@ -96,14 +99,14 @@
 
       .menu-item-content .price {
         font-size: 1.2em;
-        color: #ff6347;
+        color: #ff6347; /* Tomato color */
         font-weight: bold;
         margin-bottom: 10px;
       }
 
       .menu-item-content button {
         padding: 10px 20px;
-        background-color: #ff6347;
+        background-color: #ff6347; /* Tomato color */
         color: white;
         border: none;
         border-radius: 25px;
@@ -113,7 +116,7 @@
       }
 
       .menu-item-content button:hover {
-        background-color: #e5533e;
+        background-color: #e5533e; /* Darker shade of tomato on hover */
       }
 
       footer {
@@ -140,12 +143,15 @@
       <div class="menu-grid">
         {% for item in menu_items %}
         <div class="menu-item">
-          <img src="../static/foods/{{item[4]}}" alt="{{item[1]}}" />
+          <img
+            src="/static/foods/{{ item.image_name }}"
+            alt="{{ item.foodname }}"
+          />
           <div class="menu-item-content">
-            <h3>{{item[1]}}</h3>
-            <p>{{item[2]}}</p>
-            <div class="price">$ {{item[3]}}</div>
-            <button onclick="addToCart(this)" class="buy-btn">
+            <h3>{{ item.foodname }}</h3>
+            <p>{{ item.description }}</p>
+            <div class="price">$ {{ item.price }}</div>
+            <button onclick="addToCart('{{ item.foodname }}')">
               Add to Cart
             </button>
           </div>
@@ -157,59 +163,17 @@
     <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
 
     <script>
-      let cart = []; // Array to hold cart items
-
-      // Function to add an item to the cart
-      function addToCart(button) {
-        // Get the menu item element
-        const menuItem = button.closest(".menu-item");
-
-        // Extract details from the item
-        const imageName = menuItem.querySelector("img").getAttribute("src");
-        const foodName = menuItem.querySelector("h3").textContent.trim();
-        const price = parseFloat(
-          menuItem.querySelector(".price").textContent.replace("$", "").trim()
-        );
-
-        // Check if the item already exists in the cart
-        const existingItemIndex = cart.findIndex(
-          (item) => item.foodName === foodName
-        );
-
-        if (existingItemIndex > -1) {
-          // Update the quantity if item exists
-          cart[existingItemIndex].quantity += 1;
-        } else {
-          // Add a new item to the cart
-          cart.push({
-            imageName: imageName,
-            foodName: foodName,
-            price: price,
-            quantity: 1,
-          });
-        }
-
-        // Debugging: Display the cart in the console
-        console.log(cart);
-        alert(`${foodName} has been added to your cart!`);
-      }
-
-      // Send cart to Flask backend
-      function sendCartToBackend() {
-        fetch("/submit_cart", {
-          method: "POST", // Send data as POST request
-          headers: {
-            "Content-Type": "application/json", // Inform Flask we're sending JSON data
-          },
-          body: JSON.stringify(cart), // Convert cart object to JSON string
+      function addToCart(foodname) {
+        fetch("/cart/update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ foodname, action: "add" }),
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Cart submitted successfully:", data);
+            alert(data.message); // Notify user
           })
-          .catch((error) => {
-            console.error("Error submitting cart:", error);
-          });
+          .catch((error) => console.error("Error adding to cart:", error));
       }
     </script>
   </body>
