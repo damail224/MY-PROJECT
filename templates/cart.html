@@ -1,232 +1,363 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping Cart | DineTrail</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart | DineTrail</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Your existing styles */
+      body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: #f9f9f9;
+      }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 50px;
-  background-color: #ff6347; /* Tomato color */
-  color: white;
-}
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background-color: #ff6347; /* Tomato color */
+        color: white;
+      }
 
-header .logo {
-  font-size: 1.5em;
-  font-weight: bold;
-}
+      header .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
 
-header nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 15px;
-  font-weight: 600;
-}
+      header nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: 600;
+      }
 
-header nav a:hover {
-  text-decoration: underline;
-}
+      header nav a:hover {
+        text-decoration: underline;
+      }
 
-.cart-container {
-  max-width: 1200px;
-  margin: 50px auto;
-  padding: 20px;
-}
+      .cart-container {
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+      }
 
-.cart-title {
-  text-align: center;
-  font-size: 2.5em;
-  color: #333;
-  margin-bottom: 30px;
-}
+      .cart-title {
+        text-align: center;
+        font-size: 2.5em;
+        color: #333;
+        margin-bottom: 30px;
+      }
 
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
 
-.cart-table th, .cart-table td {
-  padding: 15px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
+      table th,
+      table td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
 
-.cart-table th {
-  background-color: #ff6347;
-  color: white;
-}
+      table th {
+        background-color: #ff6347;
+        color: white;
+      }
 
-.cart-item img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-}
+      table td img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
 
-.cart-item .item-name {
-  font-size: 1.1em;
-  color: #333;
-}
+      .cart-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+      }
 
-.cart-item .item-price, .cart-item .item-quantity {
-  color: #666;
-}
+      .cart-footer .checkout-button {
+        padding: 10px 20px;
+        background-color: #28a745; /* Green for checkout */
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-.cart-item .item-total {
-  font-weight: bold;
-  color: #ff6347;
-}
+      .cart-footer .checkout-button:hover {
+        background-color: #218838; /* Darker green on hover */
+      }
 
-.cart-item button {
-  background-color: #ff6347;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        backdrop-filter: blur(5px); /* Optional blur effect for a sleek look */
+        animation: fadeIn 0.3s ease-out;
+      }
 
-.cart-item button:hover {
-  background-color: #e5533e; /* Darker shade of tomato */
-}
+      .modal-content {
+        background: white;
+        margin: 10% auto;
+        padding: 30px;
+        width: 40%;
+        max-width: 400px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.4s ease-out;
+        text-align: center;
+      }
 
-.cart-summary {
-  text-align: right;
-  font-size: 1.2em;
-  color: #333;
-}
+      .modal-content h2 {
+        color: #ff6347;
+        margin-bottom: 20px;
+      }
 
-.cart-summary .total {
-  font-weight: bold;
-  color: #ff6347;
-}
+      .modal-content p {
+        font-size: 1.2em;
+        color: #333;
+        margin-bottom: 15px;
+      }
 
-.cart-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 50px;
-}
+      .modal-content label {
+        font-size: 1em;
+        color: #555;
+      }
 
-.cart-footer .update-cart {
-  padding: 10px 20px;
-  background-color: #ff6347;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+      .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 1em;
+      }
 
-.cart-footer .update-cart:hover {
-  background-color: #e5533e;
-}
+      .modal-content .btn {
+        padding: 10px 20px;
+        background-color: #ff6347;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 1em;
+      }
 
-.cart-footer .checkout-button {
-  padding: 10px 20px;
-  background-color: #28a745; /* Green for checkout */
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+      .modal-content .btn:hover {
+        background-color: #e5533e;
+      }
 
-.cart-footer .checkout-button:hover {
-  background-color: #218838; /* Darker green on hover */
-}
+      .modal-content .close {
+        float: right;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
 
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">DineTrail</div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/menu">Menu</a>
-      <a href="/cart">Cart</a>
-    </nav>
-  </header>
+      .modal-content .close:hover {
+        color: #ff6347;
+      }
 
-  <div class="cart-container">
-    <h1 class="cart-title">Your Shopping Cart</h1>
-    <div id="cart-container">
-      {% if cart_items %}
-        {% for item in cart_items %}
-        <div class="cart-item">
-          <h3>{{ item.foodname }}</h3>
-          <p>Quantity: {{ item.quantity }}</p>
-          <p>Unit Price: ${{ item.price }}</p>
-          <p>Total Price: ${{ item.total_price }}</p>
-          <button onclick="updateCart('{{ item.foodname }}', 'add')">Add</button>
-          <button onclick="updateCart('{{ item.foodname }}', 'remove')">Remove</button>
-        </div>
-        {% endfor %}
-      {% else %}
-        <p>Your cart is empty.</p>
-      {% endif %}
+      .modal-content #statusMessage {
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #666;
+        font-style: italic;
+      }
+
+      /* Modal animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">DineTrail</div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/menu">Menu</a>
+        <a href="/cart">Cart</a>
+      </nav>
+    </header>
+
+    <div class="cart-container">
+      <h1 class="cart-title">Your Shopping Cart</h1>
+
+      <!-- Cart Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items">
+          {% if cart_items %} {% for item in cart_items %}
+          <tr>
+            <td>
+              <img
+                src="../static/foods/{{item.image_name}}"
+                alt="{{ item.foodname }}"
+              />
+            </td>
+            <td>{{ item.foodname }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.price }}</td>
+            <td>${{ item.total_price }}</td>
+            <td>
+              <button onclick="updateCart('{{ item.foodname }}', 'add')">
+                Add
+              </button>
+              <button onclick="updateCart('{{ item.foodname }}', 'remove')">
+                Remove
+              </button>
+            </td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="6">Your cart is empty.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+
+      <!-- Grand Total -->
+      <div class="cart-total">
+        <h2>Grand Total: $<span id="grand-total">{{ grand_total }}</span></h2>
+      </div>
+
+      <!-- Checkout Button -->
+      <div class="cart-footer">
+        <button class="checkout-button" id="checkoutBtn">Checkout</button>
+      </div>
     </div>
-    <div class="cart-total">
-      <h2>Grand Total: $<span id="grand-total">{{ grand_total }}</span></h2>
+
+    <!-- Payment Modal -->
+    <div id="checkoutModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Payment</h2>
+        <p>Total Amount: KES <span id="modalAmount">{{ grand_total }}</span></p>
+        <label for="phoneNumber">Mpesa Number:</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          placeholder="Enter your phone number"
+          required
+        />
+        <button class="btn" id="payBtn">Pay</button>
+        <p id="statusMessage"></p>
+      </div>
     </div>
-  </div>
 
-  <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
+    <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
 
-  <script>
-    function updateCart(foodname, action) {
-      fetch('/cart/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ foodname, action })
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Dynamically render cart items
-        const cartContainer = document.getElementById('cart-container');
-        const grandTotal = document.getElementById('grand-total');
-        
-        if (data.cart.length === 0) {
-          cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-          grandTotal.textContent = '0.00';
-        } else {
-          cartContainer.innerHTML = '';
-          let total = 0;
+    <script>
+      // Modal logic remains the same
+      const modal = document.getElementById("checkoutModal");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      const closeModal = document.getElementById("closeModal");
+      const payBtn = document.getElementById("payBtn");
+      const statusMessage = document.getElementById("statusMessage");
 
-          data.cart.forEach(item => {
-            const totalPrice = item.quantity * item.price;
-            total += totalPrice;
+      checkoutBtn.addEventListener("click", () => {
+        modal.style.display = "block";
+      });
 
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-            cartItem.innerHTML = `
-              <h3>${item.foodname}</h3>
-              <p>Quantity: ${item.quantity}</p>
-              <p>Unit Price: $${item.price}</p>
-              <p>Total Price: $${totalPrice.toFixed(2)}</p>
-              <button onclick="updateCart('${item.foodname}', 'add')">Add</button>
-              <button onclick="updateCart('${item.foodname}', 'remove')">Remove</button>
-            `;
-            cartContainer.appendChild(cartItem);
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+        statusMessage.innerText = "";
+      });
+
+      window.onclick = (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+          statusMessage.innerText = "";
+        }
+      };
+
+      // Payment handling logic remains the same
+      payBtn.addEventListener("click", async () => {
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const grandTotal = document.getElementById("grand-total").innerText;
+
+        if (!phoneNumber) {
+          alert("Please enter your phone number.");
+          return;
+        }
+
+        payBtn.disabled = true;
+        statusMessage.innerText = "Processing payment...";
+
+        try {
+          const response = await fetch("/stkpush", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              phoneNumber,
+              amount: grandTotal,
+            }),
           });
 
-          // Update the grand total
-          grandTotal.textContent = total.toFixed(2);
+          const data = await response.json();
+
+          if (data.success) {
+            statusMessage.innerText = "Waiting for payment confirmation...";
+            // Polling logic can be added here
+          } else {
+            statusMessage.innerText = "Payment Failed. Try again.";
+            payBtn.disabled = false;
+          }
+        } catch (error) {
+          statusMessage.innerText = "An error occurred. Try again.";
+          payBtn.disabled = false;
         }
-      })
-      .catch(error => console.error('Error updating cart:', error));
-    }
-  </script>
-</body>
+      });
+    </script>
+  </body>
 </html>
