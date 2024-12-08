@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2024 at 04:29 AM
+-- Generation Time: Dec 06, 2024 at 07:27 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,8 +40,10 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `foodname`, `quantity`, `created_at`, `updated_at`) VALUES
-(1, 'Burger and fries', 3, '2024-12-06 03:25:24', '2024-12-06 03:27:37'),
-(2, 'Chicken chips', 1, '2024-12-06 03:27:58', '2024-12-06 03:27:58');
+(4, 'Chicken chips', 2, '2024-12-06 05:39:13', '2024-12-06 05:39:46'),
+(5, 'Burger and fries', 1, '2024-12-06 05:39:58', '2024-12-06 05:39:58'),
+(6, 'bread', 1, '2024-12-06 05:45:01', '2024-12-06 05:45:01'),
+(7, 'Steak Frites', 1, '2024-12-06 06:18:43', '2024-12-06 06:18:43');
 
 -- --------------------------------------------------------
 
@@ -87,19 +89,6 @@ INSERT INTO `menu_items` (`id`, `foodname`, `description`, `price`, `image_name`
 (24, 'Orange Juice', 'Freshly squeezed orange juice, bursting with natural sweetness and vitamin C, perfect for a refreshing start to your day.', 4.00, 'fresh juice.webp'),
 (25, 'Mango Juice', ' A tropical, sweet, and refreshing juice made from ripe, juicy mangoes, perfect for quenching your thirst.', 4.00, 'fresh mango.webp');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `item_id` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `total` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Indexes for dumped tables
 --
@@ -119,13 +108,6 @@ ALTER TABLE `menu_items`
   ADD UNIQUE KEY `foodname` (`foodname`);
 
 --
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `item_id` (`item_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -133,19 +115,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -156,12 +132,6 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`foodname`) REFERENCES `menu_items` (`foodname`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `menu_items` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

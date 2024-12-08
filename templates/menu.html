@@ -20,7 +20,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 20px 50px;
-        background-color: #ff6347;
+        background-color: #ff6347; /* Tomato color */
         color: white;
       }
 
@@ -55,7 +55,10 @@
 
       .menu-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(300px, 1fr)
+        ); /* Flexibly adjusts columns based on screen size */
         gap: 20px;
       }
 
@@ -68,7 +71,7 @@
       }
 
       .menu-item:hover {
-        transform: scale(1.05);
+        transform: scale(1.05); /* Slight zoom effect on hover */
       }
 
       .menu-item img {
@@ -96,14 +99,14 @@
 
       .menu-item-content .price {
         font-size: 1.2em;
-        color: #ff6347;
+        color: #ff6347; /* Tomato color */
         font-weight: bold;
         margin-bottom: 10px;
       }
 
       .menu-item-content button {
         padding: 10px 20px;
-        background-color: #ff6347;
+        background-color: #ff6347; /* Tomato color */
         color: white;
         border: none;
         border-radius: 25px;
@@ -113,7 +116,7 @@
       }
 
       .menu-item-content button:hover {
-        background-color: #e5533e;
+        background-color: #e5533e; /* Darker shade of tomato on hover */
       }
 
       footer {
@@ -141,19 +144,16 @@
         {% for item in menu_items %}
         <div class="menu-item">
           <img
-            src="../static/foods/{{item[4]}}"
-            alt=""
-            width="50"
-            height="50"
+            src="/static/foods/{{ item.image_name }}"
+            alt="{{ item.foodname }}"
           />
           <div class="menu-item-content">
-            <p>{{item[2]}}</p>
-
-            <div class="detail-box">
-              {{item[1]}} <br />
-              <b>$ {{item[3]}}</b>
-            </div>
-            <button onclick="addToCart()" class="buy-btn">Add to Cart</button>
+            <h3>{{ item.foodname }}</h3>
+            <p>{{ item.description }}</p>
+            <div class="price">$ {{ item.price }}</div>
+            <button onclick="addToCart('{{ item.foodname }}')">
+              Add to Cart
+            </button>
           </div>
         </div>
         {% endfor %}
@@ -161,35 +161,19 @@
     </div>
 
     <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
+
     <script>
-      let cart = []; // Array to hold cart items
-
-      // Function to add an item to the cart
-      function addToCart(button) {
-        const menuItem = button.closest(".menu-item");
-        const imageName = menuItem.querySelector("img").getAttribute("src");
-        const foodName = menuItem.querySelector("h3").textContent;
-        const price = parseFloat(
-          menuItem.querySelector(".price").textContent.replace(/[^\d.]/g, "")
-        );
-
-        // Check if the item already exists in the cart
-        const existingItem = cart.find((item) => item.foodName === foodName);
-
-        if (existingItem) {
-          // Update quantity if item already exists
-          existingItem.quantity += 1;
-        } else {
-          // Add a new item
-          cart.push({
-            imageName: imageName,
-            foodName: foodName,
-            price: price,
-            quantity: 1,
-          });
-        }
-
-        console.log(cart); // Debugging: Display cart in the console
+      function addToCart(foodname) {
+        fetch("/cart/update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ foodname, action: "add" }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message); // Notify user
+          })
+          .catch((error) => console.error("Error adding to cart:", error));
       }
     </script>
   </body>

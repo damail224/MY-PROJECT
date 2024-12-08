@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart Checkout | DineTrail</title>
+    <title>Shopping Cart | DineTrail</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <style>
+      /* Your existing styles */
       body {
         margin: 0;
         font-family: "Poppins", sans-serif;
@@ -20,7 +21,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 20px 50px;
-        background-color: #ff6347;
+        background-color: #ff6347; /* Tomato color */
         color: white;
       }
 
@@ -41,73 +42,210 @@
       }
 
       .cart-container {
-        max-width: 800px;
+        max-width: 1200px;
         margin: 50px auto;
         padding: 20px;
-        background-color: white;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       }
 
       .cart-title {
         text-align: center;
-        font-size: 2em;
+        font-size: 2.5em;
         color: #333;
         margin-bottom: 30px;
       }
 
-      .cart-table {
+      table {
         width: 100%;
         border-collapse: collapse;
+        margin-bottom: 30px;
       }
 
-      .cart-table th,
-      .cart-table td {
+      table th,
+      table td {
         padding: 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-
-      .cart-table th {
-        background-color: #ff6347;
-        color: white;
-        font-weight: bold;
-      }
-
-      .cart-total {
-        margin-top: 20px;
-        text-align: right;
-        font-size: 1.2em;
-        color: #333;
-        font-weight: bold;
-      }
-
-      .checkout-btn {
-        display: block;
-        width: 100%;
-        padding: 15px;
-        background-color: #ff6347;
-        color: white;
         text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #ff6347;
+        color: white;
+      }
+
+      table td img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .cart-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      .cart-footer .checkout-button {
+        padding: 10px 20px;
+        background-color: #28a745; /* Green for checkout */
+        color: white;
         border: none;
         border-radius: 25px;
-        font-size: 1.2em;
-        font-weight: bold;
         cursor: pointer;
-        margin-top: 20px;
-        text-decoration: none;
+        transition: background-color 0.3s ease;
       }
 
-      .checkout-btn:hover {
+      .cart-footer .checkout-button:hover {
+        background-color: #218838; /* Darker green on hover */
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        backdrop-filter: blur(5px); /* Optional blur effect for a sleek look */
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .modal-content {
+        background: white;
+        margin: 10% auto;
+        padding: 30px;
+        width: 40%;
+        max-width: 400px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.4s ease-out;
+        text-align: center;
+      }
+
+      .modal-content h2 {
+        color: #ff6347;
+        margin-bottom: 20px;
+      }
+
+      .modal-content p {
+        font-size: 1.2em;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      .modal-content label {
+        font-size: 1em;
+        color: #555;
+      }
+
+      .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 1em;
+      }
+
+      .modal-content .btn {
+        padding: 10px 20px;
+        background-color: #ff6347;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 1em;
+      }
+
+      .modal-content .btn:hover {
         background-color: #e5533e;
       }
 
-      footer {
-        text-align: center;
-        padding: 20px;
+      .modal-content .close {
+        float: right;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .modal-content .close:hover {
+        color: #ff6347;
+      }
+
+      .modal-content #statusMessage {
+        margin-top: 20px;
+        font-size: 0.9em;
+        color: #666;
+        font-style: italic;
+      }
+
+      /* Styles for 'Add' button */
+      .add {
+        background-color: #28a745; /* Green for Add */
+        border-color: #28a745;
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 20px; /* Adequate padding */
+        font-size: 16px; /* Suitable font size */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: all 0.3s ease; /* Smooth transition for hover and active states */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      }
+
+      /* Hover and active effects for Add button */
+      .add:hover {
+        background-color: #218838;
+        border-color: #218838;
+        transform: translateY(-2px); /* Lift effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+      }
+
+      /* Styles for 'Remove' button */
+      .remove {
+        background-color: #ff6347; /* Red for Remove */
+        border-color: #ff6347;
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 20px; /* Adequate padding */
+        font-size: 16px; /* Suitable font size */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: all 0.3s ease; /* Smooth transition for hover and active states */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      }
+
+      /* Hover and active effects for Remove button */
+      .remove:hover {
         background-color: #ff6347;
-        color: white;
-        margin-top: 50px;
+        border-color: #ff6347;
+        transform: translateY(-2px); /* Lift effect */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+      }
+
+      /* Modal animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
     </style>
   </head>
@@ -122,90 +260,216 @@
     </header>
 
     <div class="cart-container">
-      <h1 class="cart-title">Your Cart</h1>
-      <table class="cart-table" id="cartTable">
+      <h1 class="cart-title">Your Shopping Cart</h1>
+
+      <!-- Cart Table -->
+      <table>
         <thead>
           <tr>
             <th>Image</th>
-            <th>Food Name</th>
-            <th>Price</th>
+            <th>Item Name</th>
             <th>Quantity</th>
-            <th>Total</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Items will be dynamically added here -->
+        <tbody id="cart-items">
+          {% if cart_items %} {% for item in cart_items %}
+          <tr>
+            <td>
+              <img
+                src="../static/foods/{{item.image_name}}"
+                alt="{{ item.foodname }}"
+              />
+            </td>
+            <td>{{ item.foodname }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.price }}</td>
+            <td>${{ item.total_price }}</td>
+            <td>
+              <button
+                class="add"
+                onclick="updateCart('{{ item.foodname }}', 'add')"
+              >
+                Add
+              </button>
+              <button
+                class="remove"
+                onclick="updateCart('{{ item.foodname }}', 'remove')"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="6">Your cart is empty.</td>
+          </tr>
+          {% endif %}
         </tbody>
       </table>
-      <div class="cart-total" id="cartTotal">Total: $0.00</div>
-      <a href="/checkout" class="checkout-btn" id="checkoutBtn">Checkout</a>
+
+      <!-- Grand Total -->
+      <div class="cart-total">
+        <h2>Grand Total: $<span id="grand-total">{{ grand_total }}</span></h2>
+      </div>
+
+      <!-- Checkout Button -->
+      <div class="cart-footer">
+        <button class="checkout-button" id="checkoutBtn">Checkout</button>
+      </div>
     </div>
 
-    <footer>
-      <p>&copy; 2024 DineTrail. All rights reserved.</p>
-    </footer>
+    <!-- Payment Modal -->
+    <div id="checkoutModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Payment</h2>
+        <p>Total Amount: KES <span id="modalAmount">{{ grand_total }}</span></p>
+        <label for="phoneNumber">Mpesa Number:</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          placeholder="Enter your phone number"
+          required
+        />
+        <button class="btn" id="payBtn">Pay</button>
+        <p id="statusMessage"></p>
+      </div>
+    </div>
+
+    <footer>&copy; 2024 DineTrail. All Rights Reserved.</footer>
 
     <script>
-      // Example cart data (replace this with your real cart data)
-      const cart = [
-        {
-          image: "../static/foods/burgers.webp",
-          foodName: "Burger",
-          price: 9.0,
-          quantity: 2,
-        },
-        {
-          image: "../static/foods/fried chicken.webp",
-          foodName: "Fried Chicken",
-          price: 11.0,
-          quantity: 1,
-        },
-        {
-          image: "../static/foods/orange juice.webp",
-          foodName: "Orange Juice",
-          price: 4.0,
-          quantity: 3,
-        },
-      ];
-
-      // Function to render cart items
-      function renderCart() {
-        const cartTable = document
-          .getElementById("cartTable")
-          .querySelector("tbody");
-        const cartTotal = document.getElementById("cartTotal");
-        cartTable.innerHTML = ""; // Clear table
-
-        let totalAmount = 0;
-
-        cart.forEach((item) => {
-          const itemTotal = item.price * item.quantity;
-          totalAmount += itemTotal;
-
-          // Create a new row
-          const row = document.createElement("tr");
-
-          // Add table cells
-          row.innerHTML = `
-            <td><img src="${item.image}" alt="${
-            item.foodName
-          }" width="50" /></td>
-            <td>${item.foodName}</td>
-            <td>$${item.price.toFixed(2)}</td>
-            <td>${item.quantity}</td>
-            <td>$${itemTotal.toFixed(2)}</td>
-          `;
-
-          // Append row to table
-          cartTable.appendChild(row);
-        });
-
-        // Update total amount
-        cartTotal.textContent = `Total: $${totalAmount.toFixed(2)}`;
+      function updateCart(foodname, action) {
+        fetch("/cart/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            foodname: foodname,
+            action: action,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (
+              data.message === "Cart updated" ||
+              data.message === "Item removed"
+            ) {
+              console.log(`${foodname} updated in the cart.`);
+              // Refresh the page to show updated cart
+              location.reload(); // This will reload the page to reflect the cart update
+            }
+          })
+          .catch((error) => {
+            console.error("Error updating cart:", error);
+          });
       }
 
-      // Initialize cart
-      renderCart();
+      function updateCartDisplay(cartItems) {
+        const cartItemsContainer = document.getElementById("cart-items");
+        cartItemsContainer.innerHTML = ""; // Clear the existing cart items
+
+        // Loop through the updated cart items and render them
+        cartItems.forEach((item) => {
+          const cartItemElement = document.createElement("div");
+          const itemQuantity = parseInt(item.quantity) || 0; // Ensure quantity is a number
+          const itemPrice = parseFloat(item.price) || 0; // Ensure price is a number
+          const totalPrice = itemQuantity * itemPrice;
+
+          cartItemElement.innerHTML = `
+        <div class="cart-item">
+            <img src="/images/${item.foodname}.jpg" alt="${
+            item.foodname
+          }" class="food-image">
+            <span>${item.foodname}</span>
+            <span>Quantity: ${itemQuantity}</span>
+            <span>Total: $${totalPrice.toFixed(2)}</span>
+            <button onclick="updateCart('${
+              item.foodname
+            }', 'remove')">Remove</button>
+        </div>
+    `;
+          cartItemsContainer.appendChild(cartItemElement);
+        });
+
+        // Optionally, update the grand total if available
+        const grandTotal = cartItems.reduce((total, item) => {
+          const itemQuantity = parseInt(item.quantity) || 0;
+          const itemPrice = parseFloat(item.price) || 0;
+          return total + itemQuantity * itemPrice;
+        }, 0);
+
+        document.getElementById(
+          "grand-total"
+        ).innerText = `Grand Total: $${grandTotal.toFixed(2)}`;
+      }
+
+      // Modal logic remains the same
+      const modal = document.getElementById("checkoutModal");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      const closeModal = document.getElementById("closeModal");
+      const payBtn = document.getElementById("payBtn");
+      const statusMessage = document.getElementById("statusMessage");
+
+      checkoutBtn.addEventListener("click", () => {
+        modal.style.display = "block";
+      });
+
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+        statusMessage.innerText = "";
+      });
+
+      window.onclick = (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+          statusMessage.innerText = "";
+        }
+      };
+
+      // Payment handling logic remains the same
+      payBtn.addEventListener("click", async () => {
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const grandTotal = document.getElementById("grand-total").innerText;
+
+        if (!phoneNumber) {
+          alert("Please enter your phone number.");
+          return;
+        }
+
+        payBtn.disabled = true;
+        statusMessage.innerText = "Processing payment...";
+
+        try {
+          const response = await fetch("/stkpush", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              phoneNumber,
+              amount: grandTotal,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            statusMessage.innerText = "Waiting for payment confirmation...";
+            // Polling logic can be added here
+          } else {
+            statusMessage.innerText = "Payment Failed. Try again.";
+            payBtn.disabled = false;
+          }
+        } catch (error) {
+          statusMessage.innerText = "An error occurred. Try again.";
+          payBtn.disabled = false;
+        }
+      });
     </script>
   </body>
 </html>
