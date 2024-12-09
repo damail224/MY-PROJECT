@@ -130,55 +130,81 @@ def update_cart():
     return jsonify({'message': 'Cart updated', 'cart': cart_items}), 200
 
 
-# Get Access Token
 def get_access_token():
     auth_url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
     auth = base64.b64encode(f"{MPESA_CONSUMER_KEY}:{MPESA_CONSUMER_SECRET}".encode()).decode()
     headers = {"Authorization": f"Basic {auth}"}
-    response = requests.get(auth_url, headers=headers)
-    return response.json()["access_token"]
 
-# STK Push
+    response = requests.get(auth_url, headers=headers)
+    if response.status_code == 200:
+        response_data = response.json()
+        return response_data.get("access_token")
+    else:
+        print(f"Error getting access token: {response.text}")  # Log the error for debugging
+        raise Exception("Failed to get access token from M-Pesa")
+
+
 @app.route("/stkpush", methods=["POST"])
 def stkpush():
-    data = request.json
-    phone_number = data["phoneNumber"]
-    amount = data["amount"]
+    try:
+        # Validate request payload
+        data = request.json
+        phone_number = data.get("phoneNumber")
+        amount = data.get("amount")
 
-    access_token = get_access_token()
-    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    password = base64.b64encode(
-        f"{MPESA_SHORTCODE}bfb279f9aa9bdbcf158e97dd71a467cd2d6783832c088ca11a03c073e0af9c73{timestamp}".encode()
-    ).decode()
+        if not phone_number or not amount:
+            return jsonify({"success": False, "message": "Phone number and amount are required"}), 400
 
-    stk_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-    headers = {"Authorization": f"Bearer {access_token}"}
-    payload = {
-        "BusinessShortCode": MPESA_SHORTCODE,
-        "Password": password,
-        "Timestamp": timestamp,
-        "TransactionType": "CustomerPayBillOnline",
-        "Amount": amount,
-        "PartyA": phone_number,
-        "PartyB": MPESA_SHORTCODE,
-        "PhoneNumber": phone_number,
-        "CallBackURL": CALLBACK_URL,
-        "AccountReference": "Cart Checkout",
-        "TransactionDesc": "Payment for cart items",
-    }
+        # Generate access token
+        access_token = get_access_token()
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+        password = base64.b64encode(
+            f"{MPESA_SHORTCODE}{passkey}{timestamp}".encode()
+        ).decode()
 
-    response = requests.post(stk_url, json=payload, headers=headers)
-    return jsonify(response.json())
+        # Prepare STK Push payload
+        stk_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+        headers = {"Authorization": f"Bearer {access_token}"}
+        payload = {
+            "BusinessShortCode": MPESA_SHORTCODE,
+            "Password": password,
+            "Timestamp": timestamp,
+            "TransactionType": "CustomerPayBillOnline",
+            "Amount": 1,
+            "PartyA": phone_number,
+            "PartyB": MPESA_SHORTCODE,
+            "PhoneNumber": phone_number,
+            "CallBackURL": CALLBACK_URL,
+            "AccountReference": "Cart Checkout",
+            "TransactionDesc": "Payment for cart items",
+        }
 
-# Simulated Payment Confirmation
-@app.route("/payment-status/<transaction_id>", methods=["GET"])
-def payment_status(transaction_id):
+        # Send STK Push request
+        response = requests.post(stk_url, json=payload, headers=headers)
+        response_data = response.json()
+
+        if response.status_code == 200 and response_data.get("ResponseCode") == "0":
+            return jsonify({"success": True, "message": "STK push initiated"}), 200
+        else:
+            print(f"STK push failed: {response.text}")  # Log error for debugging
+            return jsonify({"success": False, "message": response_data.get("errorMessage", "STK push failed")}), 400
+
+    except Exception as e:
+        print(f"Error in /stkpush: {e}")  # Log exception for debugging
+        return jsonify({"success": False, "message": "Internal server error"}), 500
+
+
+@app.route("/simulate-payment/<transaction_id>", methods=["GET"])
+def simulate_payment(transaction_id):
     # Simulate payment confirmation
-    from random import randint
-    if randint(0, 1):  # Simulate success 50% of the time
-        return jsonify({"success": True})
+    from random import choice
+    success = choice([True, False])  # Randomly simulate success or failure
+    if success:
+        return jsonify({"success": True, "transactionId": transaction_id})
     else:
-        return jsonify({"success": False})
+        return jsonify({"success": False, "transactionId": transaction_id})
+
 
 
 if __name__ == "__main__":
